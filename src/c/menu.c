@@ -104,13 +104,7 @@ static void menu_draw_header(GContext* ctx, const Layer* cell_layer, uint16_t se
 
 static void menu_cell_animated_draw(GContext* ctx, const Layer* cell_layer, char* text, char* subtext, bool animate){
   if(animate && s_scroll_index > 0 && strlen(text) > 16 ){
-   /* if(((int16_t)strlen(text)-15-s_scroll_index)>0)
-        text+=s_scroll_index;
-     else
-        s_scroll_index = 0;
-        
-     */ 
-     if( last_s_scroll_row_index !=s_scroll_row_index){
+      if( last_s_scroll_row_index !=s_scroll_row_index){
           strcpy(tmp_menu_item,text);
           if(strlen(text) < 97){ 
              //strcat(tmp_menu_item,"                   ");
@@ -125,7 +119,7 @@ static void menu_cell_animated_draw(GContext* ctx, const Layer* cell_layer, char
          tmp_menu_item[i] = tmp_menu_item[i+1];
       }
       tmp_menu_item[strlen(tmp_menu_item)] = stmp;
-      //strncpy(tmp_menu_item_display, tmp_menu_item,17);
+      
       menu_cell_basic_draw(ctx,cell_layer,tmp_menu_item,subtext,NULL);
   }    
   else{       
@@ -194,13 +188,11 @@ static void scroll_timer_callback(void *data){
 }
 
 static void menu_selection_changed(struct MenuLayer *menu_layer, MenuIndex new_index, MenuIndex old_index, void *callback_context){
-  //app_timeout_ms = 300;
   s_scroll_index=0;
   s_scroll_row_index = new_index.row;
   
   app_timer_cancel(s_scroll_timer);
   s_scroll_timer = app_timer_register(1000,scroll_timer_callback,NULL);  
-  //app_timer_reschedule(s_scroll_timer,app_timeout_ms);
 }
 
 static void menu_select(struct MenuLayer* menu, MenuIndex* cell_index, void* callback_context) {
